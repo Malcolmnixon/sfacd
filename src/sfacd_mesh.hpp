@@ -1,9 +1,9 @@
 #pragma once
 
-#include "cb_vector3.hpp"
+#include "sfacd_math.hpp"
 #include <vector>
 
-namespace cb
+namespace sfacd
 {
 	/// Mesh error
 	enum class mesh_error

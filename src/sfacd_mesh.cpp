@@ -1,4 +1,4 @@
-#include "cb_mesh.hpp"
+#include "sfacd_mesh.hpp"
 #include <fstream>
 #include <string>
 #include <regex>
@@ -35,7 +35,7 @@ namespace
 	///	@param mesh						Mesh
 	///	@param face						Face
 	///	@return							True if valid
-	bool is_face_valid(const cb::mesh &mesh, const cb::mesh::face& face)
+	bool is_face_valid(const sfacd::mesh &mesh, const sfacd::mesh::face& face)
 	{
 		// Fail if the indices are invalid
 		if (face.v0 < 0 || face.v0 >= static_cast<int>(mesh.vertices.size()) ||
@@ -61,7 +61,7 @@ namespace
 	}
 }
 
-cb::mesh_error cb::mesh::load_obj(const char* p_path)
+sfacd::mesh_error sfacd::mesh::load_obj(const char* p_path)
 {
 	// Clear the current contents
 	vertices.clear();
@@ -92,11 +92,11 @@ cb::mesh_error cb::mesh::load_obj(const char* p_path)
 			if (std::regex_match(line, match, obj_vertex_regex))
 			{
 				// Add vertex
-				obj_vertices.push_back({
+				obj_vertices.emplace_back(
 					std::stof(match[1]),
 					std::stof(match[2]),
 					std::stof(match[3])
-				});
+				);
 			}
 		}
 		else if (line[0] == 'f')
@@ -186,7 +186,7 @@ cb::mesh_error cb::mesh::load_obj(const char* p_path)
 	return mesh_error::success;
 }
 
-bool cb::mesh::save_obj(const char* p_path) const
+bool sfacd::mesh::save_obj(const char* p_path) const
 {
 	// Open the file for writing
 	std::ofstream out(p_path);
@@ -212,7 +212,7 @@ bool cb::mesh::save_obj(const char* p_path) const
 	return true;
 }
 
-bool cb::mesh::is_closed() const
+bool sfacd::mesh::is_closed() const
 {
 	// Assemble the dictionary of unique edges and the count of faces that use them
 	std::map<int64_t, int> edges;
@@ -230,7 +230,7 @@ bool cb::mesh::is_closed() const
 		[](const std::pair<int64_t, int>& p) 	{ return p.second == 2; });
 }
 
-bool cb::mesh::is_convex() const
+bool sfacd::mesh::is_convex() const
 {
 	// Check if the mesh is convex
 	for (const face& f : faces)
@@ -269,7 +269,7 @@ bool cb::mesh::is_convex() const
 	return true;
 }
 
-bool cb::mesh::is_multiple() const
+bool sfacd::mesh::is_multiple() const
 {
 	// Count of objects
 	int objects = 0;
