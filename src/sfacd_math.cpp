@@ -43,7 +43,7 @@ namespace sfacd
         if (p_point)
         {
             const float t = dist1 / (dist1 - dist2);
-            *p_point = p_point1 + (p_point2 - p_point1) * t;
+            *p_point = p_point1.lerp(p_point2, t);
         }
 
         return true;
@@ -97,7 +97,7 @@ namespace sfacd
             {
                 // Calculate the intersection point
                 const float t = vertex_dist / (vertex_dist - next_dist);
-                const vector3 point = vertex[i] + (vertex[i2] - vertex[i]) * t;
+                const vector3 point = vertex[i].lerp(vertex[i2], t);
 
                 // Add the intersection point to both lists
                 above[above_count++] = point;

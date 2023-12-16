@@ -90,6 +90,15 @@ namespace sfacd
             Assert::IsTrue(vector3(0.0f, 0.0f, 1.0f) == vector3(0.0f, 0.0f, 100.0f).normalized());
         }
 
+        TEST_METHOD(test_lerp)
+        {
+            Assert::IsTrue(vector3(0.0f, 0.0f, 0.0f) == vector3(0.0f, 0.0f, 0.0f).lerp(vector3(1.0f, 2.0f, 3.0f), 0.0f));
+            Assert::IsTrue(vector3(1.0f, 2.0f, 3.0f) == vector3(0.0f, 0.0f, 0.0f).lerp(vector3(1.0f, 2.0f, 3.0f), 1.0f));
+            Assert::IsTrue(vector3(0.5f, 1.0f, 1.5f) == vector3(0.0f, 0.0f, 0.0f).lerp(vector3(1.0f, 2.0f, 3.0f), 0.5f));
+            Assert::IsTrue(vector3(-1.0f, -2.0f, -3.0f) == vector3(0.0f, 0.0f, 0.0f).lerp(vector3(1.0f, 2.0f, 3.0f), -1.0f));
+            Assert::IsTrue(vector3(2.0f, 4.0f, 6.0f) == vector3(0.0f, 0.0f, 0.0f).lerp(vector3(1.0f, 2.0f, 3.0f), 2.0f));
+        }
+
         TEST_METHOD(test_is_zero_approx)
         {
             Assert::IsTrue(vector3{0.0f, 0.0f, 0.0f}.is_zero_approx());

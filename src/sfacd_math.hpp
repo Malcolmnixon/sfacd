@@ -22,6 +22,13 @@ namespace sfacd
     /// @return                     -1 if negative, 0 if zero, 1 if positive
     int get_sign(float p_value);
 
+    /// Linear interpolation
+    /// @param p_value1             First value
+    /// @param p_value2             Second value
+    /// @param p_t                  Interpolation factor
+    /// @return                     Interpolated value
+    float lerp(float p_value1, float p_value2, float p_t);
+
     /// 3D vector
     struct vector3
     {
@@ -56,6 +63,12 @@ namespace sfacd
         /// Calculate normalized vector
         /// @return                     Normalized vector
         inline vector3 normalized() const;
+
+        /// Calculate linear interpolation
+        /// @param p_v                  Vector to lerp to
+        /// @param p_t                  Interpolation factor
+        /// @return                     Interpolated vector
+        inline vector3 lerp(const vector3& p_v, float p_t) const;
 
         /// Check if vector is zero
         /// @return                     True if zero
@@ -304,6 +317,11 @@ namespace sfacd
         return 0;
     }
 
+    inline float lerp(const float p_value1, const float p_value2, const float p_t)
+    {
+        return p_value1 + (p_value2 - p_value1) * p_t;
+    }
+
     inline vector3::vector3(const float p_x, const float p_y, const float p_z)
         : x(p_x), y(p_y), z(p_z)
     {
@@ -342,6 +360,16 @@ namespace sfacd
         }
         return vector3{x / l, y / l, z / l};
     }
+
+    inline vector3 vector3::lerp(const vector3& p_v, const float p_t) const
+    {
+        return vector3{
+           sfacd::lerp(x, p_v.x, p_t),
+           sfacd::lerp(y, p_v.y, p_t),
+           sfacd::lerp(z, p_v.z, p_t)
+        };
+    }
+
 
     inline bool vector3::is_zero_approx() const
     {

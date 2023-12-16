@@ -37,5 +37,17 @@ namespace sfacd
             Assert::AreEqual(1, get_sign(1000000.0f));
             Assert::AreEqual(-1, get_sign(-1000000.0f));
         }
+
+        TEST_METHOD(test_lerp)
+        {
+            Assert::AreEqual(0.0f, lerp(0.0f, 1.0f, 0.0f));
+            Assert::AreEqual(0.5f, lerp(0.0f, 1.0f, 0.5f));
+            Assert::AreEqual(1.0f, lerp(0.0f, 1.0f, 1.0f));
+            Assert::AreEqual(0.0f, lerp(0.0f, 100.0f, 0.0f));
+            Assert::AreEqual(50.0f, lerp(0.0f, 100.0f, 0.5f));
+            Assert::AreEqual(100.0f, lerp(0.0f, 100.0f, 1.0f));
+            Assert::AreEqual(-1.0f, lerp(0.0f, 1.0f, -1.0f));
+            Assert::AreEqual(2.0f, lerp(0.0f, 1.0f, 2.0f));
+        }
     };
 }
